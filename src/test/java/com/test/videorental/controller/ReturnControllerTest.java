@@ -2,6 +2,7 @@ package com.test.videorental.controller;
 
 import com.test.videorental.dto.request.MovieReturnRequestDtoSet;
 import com.test.videorental.service.ReturnService;
+import com.test.videorental.validator.ReturnValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,10 @@ public class ReturnControllerTest {
 
     @Mock
     private ReturnService returnService;
+
+    @SuppressWarnings("unused")
+    @Mock
+    private ReturnValidator returnValidator;
 
     @Test
     public void test_returnServiceCalled() {

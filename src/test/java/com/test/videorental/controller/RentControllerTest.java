@@ -2,6 +2,7 @@ package com.test.videorental.controller;
 
 import com.test.videorental.dto.request.MovieRentRequestDtoSet;
 import com.test.videorental.service.RentService;
+import com.test.videorental.validator.RentValidator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,10 @@ public class RentControllerTest {
 
     @Mock
     private RentService rentService;
+
+    @SuppressWarnings("unused")
+    @Mock
+    private RentValidator rentValidator;
 
     @Test
     public void test_rentServiceCalled() {

@@ -34,7 +34,7 @@ public class RentValidator extends CommonValidator {
         if (!isValid(customerId, movieRentRequestDtos, responseDto)) {
             return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
         }
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     boolean isValid(long customerId, Set<MovieRentRequestDto> movieRentRequestDtos, MovieRentResponseDto responseDto) {

@@ -29,7 +29,7 @@ public class RentService {
 
     private final BonusPointService bonusPointService;
 
-    private final RentValidator rentValidator;
+
 
     private final CustomerRepository customerRepository;
 
@@ -45,7 +45,6 @@ public class RentService {
                        MovieRepository movieRepository, ModelMapper mapper) {
         this.calculationService = calculationService;
         this.bonusPointService = bonusPointService;
-        this.rentValidator = rentValidator;
         this.customerRepository = customerRepository;
         this.movieRepository = movieRepository;
         this.rentalRepository = rentalRepository;
@@ -53,20 +52,12 @@ public class RentService {
     }
 
     public ResponseEntity<MovieRentResponseDto> rentMovies(long customerId, MovieRentRequestDtoSet movieRentRequestDtoSet) {
-
         Set<MovieRentRequestDto> movieRentRequestDtos = movieRentRequestDtoSet.getMovieRentRequestDtoSet();
-        MovieRentResponseDto responseDto = new MovieRentResponseDto();
-        ResponseEntity<MovieRentResponseDto> responseEntity = rentValidator.validateMovieRequest(customerId, movieRentRequestDtos, responseDto);
-        if (responseEntity != null) {
-            return responseEntity;
-        }
 
         Set<MovieRentWithPriceDto> rentResponse = prepareRentResponse(movieRentRequestDtos);
         Set<Rental> rentalList = saveRentals(customerId, rentResponse);
 
-        responseDto.setRentResponse(rentResponse);
-        responseDto.setErrorMessage("");
-        responseDto.setTotalPrice(rentalList.stream().map(r -> r.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        MovieRentResponseDto responseDto = initResponseDto(rentResponse, rentalList);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
@@ -83,6 +74,14 @@ public class RentService {
         rentalRepository.save(rentalList);
         bonusPointService.addBonusPoints(customerId, rentalList);
         return rentalList;
+    }
+
+    private MovieRentResponseDto initResponseDto(Set<MovieRentWithPriceDto> rentResponse, Set<Rental> rentalList) {
+        MovieRentResponseDto responseDto = new MovieRentResponseDto();
+        responseDto.setRentResponse(rentResponse);
+        responseDto.setErrorMessage("");
+        responseDto.setTotalPrice(rentalList.stream().map(r -> r.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        return responseDto;
     }
 
     private Set<MovieRentWithPriceDto> mapRequestToResponse(Set<MovieRentRequestDto> movieRentRequestDtos) {

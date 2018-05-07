@@ -34,7 +34,7 @@ public class ReturnValidator extends CommonValidator {
         if (!isValid(customerId, movieReturnRequestDtos, responseDto)) {
             return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
         }
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     boolean isValid(long customerId, Set<MovieReturnRequestDto> movieReturnRequestDtos, MovieReturnResponseDto responseDto) {

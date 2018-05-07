@@ -26,8 +26,6 @@ public class ReturnService {
 
     private final CalculationService calculationService;
 
-    private final ReturnValidator returnValidator;
-
     private final RentalRepository rentalRepository;
 
     private final MovieRepository movieRepository;
@@ -35,10 +33,9 @@ public class ReturnService {
     private final ModelMapper mapper;
 
     @Autowired
-    public ReturnService(CalculationService calculationService, ReturnValidator returnValidator, RentalRepository rentalRepository,
+    public ReturnService(CalculationService calculationService,  RentalRepository rentalRepository,
                          MovieRepository movieRepository, ModelMapper mapper) {
         this.calculationService = calculationService;
-        this.returnValidator = returnValidator;
         this.rentalRepository = rentalRepository;
         this.movieRepository = movieRepository;
         this.mapper = mapper;
@@ -46,18 +43,11 @@ public class ReturnService {
 
     public ResponseEntity<MovieReturnResponseDto> returnMovies(long customerId, MovieReturnRequestDtoSet rentReturnRequestDtoList) {
         Set<MovieReturnRequestDto> movieReturnRequestDtos = rentReturnRequestDtoList.getMovieReturnRequestDtoSet();
-        MovieReturnResponseDto responseDto = new MovieReturnResponseDto();
-        ResponseEntity<MovieReturnResponseDto> responseEntity = returnValidator.validateMovieReturn(customerId, movieReturnRequestDtos, responseDto);
-        if (responseEntity != null) {
-            return responseEntity;
-        }
 
         Set<MovieReturnWithSurchargesDto> rentResponse = prepareReturnResponse(customerId, movieReturnRequestDtos);
         updateRentals(customerId, rentResponse);
 
-        responseDto.setReturnResponse(rentResponse);
-        responseDto.setErrorMessage("");
-        responseDto.setTotalSurcharges(rentResponse.stream().map(r -> r.getSurcharges()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        MovieReturnResponseDto responseDto = initResponseDto(rentResponse);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
@@ -73,6 +63,14 @@ public class ReturnService {
     void updateRentals(long customerId, Set<MovieReturnWithSurchargesDto> rentResponse) {
         Set<Rental> rentList = rentResponse.stream().map(r -> updateRental(customerId, r)).collect(Collectors.toSet());
         rentalRepository.save(rentList);
+    }
+
+    private MovieReturnResponseDto initResponseDto(Set<MovieReturnWithSurchargesDto> rentResponse) {
+        MovieReturnResponseDto responseDto = new MovieReturnResponseDto();
+        responseDto.setReturnResponse(rentResponse);
+        responseDto.setErrorMessage("");
+        responseDto.setTotalSurcharges(rentResponse.stream().map(r -> r.getSurcharges()).reduce(BigDecimal.ZERO, BigDecimal::add));
+        return responseDto;
     }
 
     private Set<MovieReturnWithSurchargesDto> mapRequestToResponse(Set<MovieReturnRequestDto> movieReturnRequestDtos) {
