@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -68,7 +69,8 @@ public class ReturnService {
         return returnResponse;
     }
 
-    private void updateRentals(long customerId, Set<MovieReturnWithSurchargesDto> rentResponse) {
+    @Transactional
+    void updateRentals(long customerId, Set<MovieReturnWithSurchargesDto> rentResponse) {
         Set<Rental> rentList = rentResponse.stream().map(r -> updateRental(customerId, r)).collect(Collectors.toSet());
         rentalRepository.save(rentList);
     }

@@ -68,7 +68,6 @@ public class CommonValidatorTest {
         //given
         Set<MovieRentRequestDto> movieRentRequestDtoList = initMovieRentRequestDtoList();
         Movie movie = initMovie();
-
         MovieRentResponseDto movieRentResponseDto = new MovieRentResponseDto();
 
         //when
@@ -83,7 +82,6 @@ public class CommonValidatorTest {
     public void test_moviesRentDataValid_fail() {
         //given
         Set<MovieRentRequestDto> movieRentRequestDtoList = initMovieRentRequestDtoList();
-
         MovieRentResponseDto movieRentResponseDto = new MovieRentResponseDto();
 
         //when
@@ -98,9 +96,7 @@ public class CommonValidatorTest {
     public void test_moviesReturnDataValid_success() {
         //given
         Set<MovieReturnRequestDto> movieReturnRequestDtoList = initMovieReturnRequestDtoList();
-
         Movie movie = initMovie();
-
         MovieReturnResponseDto movieReturnResponseDto = new MovieReturnResponseDto();
 
         //when
@@ -115,7 +111,6 @@ public class CommonValidatorTest {
     public void test_moviesReturnDataValid_fail() {
         //given
         Set<MovieReturnRequestDto> movieReturnRequestDtoList = initMovieReturnRequestDtoList();
-
         MovieReturnResponseDto movieReturnResponseDto = new MovieReturnResponseDto();
 
         //when

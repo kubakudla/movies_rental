@@ -110,7 +110,6 @@ public class ReturnValidatorTest {
         //given
         Set<MovieReturnRequestDto> movieReturnRequestDtoList = initMovieReturnRequestDtoList();
         MovieReturnResponseDto movieReturnResponseDto = new MovieReturnResponseDto();
-        Movie movie = initMovie();
         Rental rental = initRental();
 
         //when
@@ -129,7 +128,6 @@ public class ReturnValidatorTest {
         Set<MovieReturnRequestDto> movieReturnRequestDtoList = initMovieReturnRequestDtoList();
         MovieReturnResponseDto movieReturnResponseDto = new MovieReturnResponseDto();
         Movie movie = initMovie();
-        Rental rental = initRental();
 
         //when
         when(customerRepository.exists(CUSTOMER_ID)).thenReturn(true);

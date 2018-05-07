@@ -21,8 +21,6 @@ public class RentControllerTest {
     @Mock
     private RentService rentService;
 
-    //TODO: walidacja
-
     @Test
     public void test_rentServiceCalled() {
         MovieRentRequestDtoSet movieRentRequestDtoSet = new MovieRentRequestDtoSet();

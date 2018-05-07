@@ -21,8 +21,6 @@ public class ReturnControllerTest {
     @Mock
     private ReturnService returnService;
 
-    //TODO: walidacja
-
     @Test
     public void test_returnServiceCalled() {
         MovieReturnRequestDtoSet movieRentRequestDtoList = new MovieReturnRequestDtoSet();

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -76,7 +77,8 @@ public class RentService {
         return rentResponse;
     }
 
-    private Set<Rental> saveRentals(long customerId, Set<MovieRentWithPriceDto> rentResponse) {
+    @Transactional
+    Set<Rental> saveRentals(long customerId, Set<MovieRentWithPriceDto> rentResponse) {
         Set<Rental> rentalList = rentResponse.stream().map(r -> createNewRentAndCalculatePrice(customerId, r)).collect(Collectors.toSet());
         rentalRepository.save(rentalList);
         bonusPointService.addBonusPoints(customerId, rentalList);

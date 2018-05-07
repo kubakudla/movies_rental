@@ -39,6 +39,7 @@ public class ReturnServiceTest {
     @Mock
     private CalculationService calculationService;
 
+    @SuppressWarnings("unused")
     @Mock
     private ReturnValidator returnValidator;
 

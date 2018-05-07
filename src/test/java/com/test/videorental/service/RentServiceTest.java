@@ -37,21 +37,25 @@ public class RentServiceTest {
     @InjectMocks
     private RentService rentService;
 
+    @SuppressWarnings("unused")
     @Mock
     private RentValidator rentValidator;
 
     @Mock
     private CalculationService calculationService;
 
+    @SuppressWarnings("unused")
     @Mock
     private BonusPointService bonusPointService;
 
+    @SuppressWarnings("unused")
     @Mock
     private CustomerRepository customerRepository;
 
     @Mock
     private MovieRepository movieRepository;
 
+    @SuppressWarnings("unused")
     @Mock
     private RentalRepository rentalRepository;
 
