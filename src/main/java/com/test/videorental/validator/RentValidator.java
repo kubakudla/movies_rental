@@ -30,7 +30,8 @@ public class RentValidator extends CommonValidator {
         this.rentalRepository = rentalRepository;
     }
 
-    public ResponseEntity<MovieRentResponseDto> validateMovieRequest(long customerId, Set<MovieRentRequestDto> movieRentRequestDtos, MovieRentResponseDto responseDto) {
+    public ResponseEntity<MovieRentResponseDto> validateMovieRequest(long customerId, Set<MovieRentRequestDto> movieRentRequestDtos) {
+        MovieRentResponseDto responseDto = new MovieRentResponseDto();
         if (!isValid(customerId, movieRentRequestDtos, responseDto)) {
             return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);
         }

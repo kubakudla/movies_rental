@@ -52,7 +52,6 @@ public class ReturnController {
 
     private ResponseEntity<MovieReturnResponseDto> validateMovieReturn(@PathVariable("customerId") long customerId, @Valid @RequestBody MovieReturnRequestDtoSet rentReturnRequestDtoSet) {
         Set<MovieReturnRequestDto> movieReturnRequestDtos = rentReturnRequestDtoSet.getMovieReturnRequestDtoSet();
-        MovieReturnResponseDto responseDto = new MovieReturnResponseDto();
-        return returnValidator.validateMovieReturn(customerId, movieReturnRequestDtos, responseDto);
+        return returnValidator.validateMovieReturn(customerId, movieReturnRequestDtos);
     }
 }

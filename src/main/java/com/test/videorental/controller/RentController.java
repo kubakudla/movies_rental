@@ -53,7 +53,6 @@ public class RentController {
 
     private ResponseEntity<MovieRentResponseDto> validateMovieRequest(@PathVariable("customerId") long customerId, @Valid @RequestBody MovieRentRequestDtoSet rentRequestDtoSet) {
         Set<MovieRentRequestDto> movieRentRequestDtos = rentRequestDtoSet.getMovieRentRequestDtoSet();
-        MovieRentResponseDto responseDto = new MovieRentResponseDto();
-        return rentValidator.validateMovieRequest(customerId, movieRentRequestDtos, responseDto);
+        return rentValidator.validateMovieRequest(customerId, movieRentRequestDtos);
     }
 }
